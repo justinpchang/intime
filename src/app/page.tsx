@@ -3,6 +3,7 @@
 import useTimer from "@/hooks/useTimer";
 import { useCallback, useEffect, useState } from "react";
 import { formatSecondsForDisplay } from "@/utils/timeUtils";
+import NumberInput from "@/components/NumberInput";
 
 const WARM_UP_TIME = 3;
 
@@ -93,41 +94,21 @@ export default function Home() {
 
   if (isCreating) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="container h-100 mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">New workout</h1>
-        <div className="mb-4">
-          <label className="block">
-            Sets
-            <input
-              type="number"
-              value={setCount}
-              onChange={(e) => setSetCount(Number(e.target.value))}
-              className="border border-gray-300 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block">
-            Work
-            <input
-              type="number"
-              value={workTimeInSeconds}
-              onChange={(e) => setWorkTimeInSeconds(Number(e.target.value))}
-              className="border border-gray-300 rounded px-2 py-1"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block">
-            Rest
-            <input
-              type="number"
-              value={restTimeInSeconds}
-              onChange={(e) => setRestTimeInSeconds(Number(e.target.value))}
-              className="border border-gray-300 rounded px-2 py-1"
-            />
-          </label>
-        </div>
+        <NumberInput label="Sets" value={setCount} setValue={setSetCount} />
+        <NumberInput
+          label="Work"
+          value={workTimeInSeconds}
+          setValue={setWorkTimeInSeconds}
+          type="time"
+        />
+        <NumberInput
+          label="Rest"
+          value={restTimeInSeconds}
+          setValue={setRestTimeInSeconds}
+          type="time"
+        />
         <div className="mb-4">
           <label className="block">
             Should skip last rest
@@ -178,8 +159,8 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="flex justify-between mb-4">
+    <div className="container h-screen flex flex-col justify-between mx-auto p-4">
+      <div className="flex justify-between items-center mb-4">
         <button
           type="button"
           onClick={() => {
@@ -190,8 +171,9 @@ export default function Home() {
         >
           X
         </button>
-        <div>
-          Remaining: {formatSecondsForDisplay(totalWorkoutRemainingSeconds)}
+        <div className="flex flex-col justify-center items-center">
+          <div className="font-bold opacity-70">REMAINING</div>
+          <div>{formatSecondsForDisplay(totalWorkoutRemainingSeconds)}</div>
         </div>
         <button
           type="button"
@@ -201,11 +183,11 @@ export default function Home() {
           {shouldPlayAudio ? "🔊" : "🔇"}
         </button>
       </div>
-      <div>
+      <div className="flex flex-col justify-center items-center">
         <p className="text-lg font-bold">
           {currentSetType?.toLocaleUpperCase()} {currentSetIndex + 1}/{setCount}
         </p>
-        <p>{formatSecondsForDisplay(totalSeconds)}</p>
+        <p className="text-8xl">{formatSecondsForDisplay(totalSeconds)}</p>
       </div>
       <div className="flex justify-between">
         <button
