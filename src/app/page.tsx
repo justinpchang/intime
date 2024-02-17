@@ -38,7 +38,7 @@ export default function Home() {
   } = useWakeLock();
 
   // Audio
-  const { beepUp, beepDown } = useBeep();
+  const { beepUp, beepDown } = useBeep(shouldPlayAudio);
 
   // Workout state
   const [isPaused, setIsPaused] = useState(false);

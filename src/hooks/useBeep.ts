@@ -6,12 +6,12 @@ interface UseBeepReturn {
   beepDown: () => void;
 }
 
-export default function useBeep(): UseBeepReturn {
+export default function useBeep(enabled: boolean): UseBeepReturn {
   const soundUp = useSound("/beep-up.wav");
   const soundDown = useSound("/beep-down.wav");
 
   return {
-    beepUp: soundUp[0],
-    beepDown: soundDown[0],
+    beepUp: enabled ? soundUp[0] : () => {},
+    beepDown: enabled ? soundDown[0] : () => {},
   };
 }
