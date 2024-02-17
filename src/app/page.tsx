@@ -4,8 +4,12 @@ import useTimer from "@/hooks/useTimer";
 import { useCallback, useEffect, useState } from "react";
 import { formatSecondsForDisplay } from "@/utils/timeUtils";
 import NumberInput from "@/components/NumberInput";
+import Checkbox from "@/components/Checkbox";
 
 const WARM_UP_TIME = 3;
+const DEFAULT_SET_COUNT = 10;
+const DEFAULT_WORK_TIME = 10;
+const DEFAULT_REST_TIME = 50;
 
 enum SetType {
   WarmUp = "warm-up",
@@ -17,9 +21,9 @@ export default function Home() {
   const [isCreating, setIsCreating] = useState(true);
 
   // Workout configuration
-  const [setCount, setSetCount] = useState(3);
-  const [workTimeInSeconds, setWorkTimeInSeconds] = useState(2);
-  const [restTimeInSeconds, setRestTimeInSeconds] = useState(3);
+  const [setCount, setSetCount] = useState(DEFAULT_SET_COUNT);
+  const [workTimeInSeconds, setWorkTimeInSeconds] = useState(DEFAULT_WORK_TIME);
+  const [restTimeInSeconds, setRestTimeInSeconds] = useState(DEFAULT_REST_TIME);
 
   // Settings
   const [shouldSkipLastRest, setShouldSkipLastRest] = useState(true);
@@ -109,38 +113,22 @@ export default function Home() {
           setValue={setRestTimeInSeconds}
           type="time"
         />
-        <div className="mb-4">
-          <label className="block">
-            Skip last rest
-            <input
-              type="checkbox"
-              checked={shouldSkipLastRest}
-              onChange={(e) => setShouldSkipLastRest(e.target.checked)}
-              className="mr-2"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block">
-            Play audio
-            <input
-              type="checkbox"
-              checked={shouldPlayAudio}
-              onChange={(e) => setShouldPlayAudio(e.target.checked)}
-              className="mr-2"
-            />
-          </label>
-        </div>
-        <div className="mb-4">
-          <label className="block">
-            Keep screen on
-            <input
-              type="checkbox"
-              checked={shouldKeepScreenOn}
-              onChange={(e) => setShouldKeepScreenOn(e.target.checked)}
-              className="mr-2"
-            />
-          </label>
+        <div className="space-y-4 m-2 mb-4">
+          <Checkbox
+            label="Skip last rest"
+            isChecked={shouldSkipLastRest}
+            setIsChecked={setShouldSkipLastRest}
+          />
+          <Checkbox
+            label="Play audio"
+            isChecked={shouldPlayAudio}
+            setIsChecked={setShouldPlayAudio}
+          />
+          <Checkbox
+            label="Keep screen on"
+            isChecked={shouldKeepScreenOn}
+            setIsChecked={setShouldKeepScreenOn}
+          />
         </div>
         <button
           type="button"
@@ -181,7 +169,7 @@ export default function Home() {
         <button
           type="button"
           onClick={() => setShouldPlayAudio(!shouldPlayAudio)}
-          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-gray-200 hover:bg-gray-300 text-white font-bold py-2 px-4 rounded"
         >
           {shouldPlayAudio ? "🔊" : "🔇"}
         </button>
