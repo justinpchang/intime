@@ -23,7 +23,7 @@ export default function NumberInput({
   const min = type === "number" ? 1 : 0;
 
   const inputClassName =
-    "text-center outline-none font-bold text-2xl min-w-0 flex-grow-1";
+    "text-center outline-none font-bold text-4xl min-w-0 flex-grow-1";
   const input =
     type === "number" ? (
       <input
