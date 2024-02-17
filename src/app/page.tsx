@@ -151,7 +151,7 @@ export default function Home() {
   }
 
   return (
-    <div className="container h-screen flex flex-col justify-between mx-auto p-4">
+    <div className="container h-full flex flex-col justify-between mx-auto p-4 pb-10">
       <div className="flex justify-between items-center mb-4">
         <button
           type="button"
