@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { formatSecondsForDisplay } from "@/utils/timeUtils";
 import NumberInput from "@/components/NumberInput";
 import Checkbox from "@/components/Checkbox";
+import { Metadata } from "next";
 
 const WARM_UP_TIME = 3;
 const DEFAULT_SET_COUNT = 10;
