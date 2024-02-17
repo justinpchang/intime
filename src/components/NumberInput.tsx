@@ -22,7 +22,8 @@ export default function NumberInput({
   const increment = type === "number" ? 1 : 10;
   const min = type === "number" ? 1 : 0;
 
-  const inputClassName = "text-center outline-none font-bold text-2xl w-40";
+  const inputClassName =
+    "text-center outline-none font-bold text-2xl min-w-0 flex-grow-1";
   const input =
     type === "number" ? (
       <input
@@ -37,11 +38,11 @@ export default function NumberInput({
     );
 
   return (
-    <label className="flex flex-col w-fit items-center font-semibold text-sm text-center text-gray-500">
+    <label className="flex flex-col items-center mb-4 pt-2 rounded-xl border border-grey-50 font-semibold text-xs text-center text-gray-500">
       {label.toUpperCase()}
-      <div className="mb-4 flex items-center text-black">
+      <div className="mt-[-4px] w-full flex items-center text-black">
         <IconButton
-          icon="-"
+          icon="&ndash;"
           onClick={() => setValue(Math.max(min, value - increment))}
         />
         {input}

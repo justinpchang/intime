@@ -5,10 +5,7 @@ interface Props {
 
 export default function IconButton({ icon, onClick }: Props) {
   return (
-    <button
-      onClick={onClick}
-      className="border border-gray-300 rounded px-4 py-2 text-2xl"
-    >
+    <button onClick={onClick} className="rounded px-4 py-2 text-3xl">
       {icon}
     </button>
   );

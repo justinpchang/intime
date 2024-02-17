@@ -94,7 +94,7 @@ export default function Home() {
 
   if (isCreating) {
     return (
-      <div className="container h-100 mx-auto p-4">
+      <div className="container h-100 w-96 mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">New workout</h1>
         <NumberInput label="Sets" value={setCount} setValue={setSetCount} />
         <NumberInput
@@ -111,7 +111,7 @@ export default function Home() {
         />
         <div className="mb-4">
           <label className="block">
-            Should skip last rest
+            Skip last rest
             <input
               type="checkbox"
               checked={shouldSkipLastRest}
@@ -150,9 +150,12 @@ export default function Home() {
             setCurrentSetType(SetType.WarmUp);
             start(WARM_UP_TIME);
           }}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          className="w-full flex justify-between bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-4 rounded-2xl"
         >
-          Start workout {formatSecondsForDisplay(totalWorkoutSeconds)}
+          <div>Start workout</div>
+          <div className="opacity-70">
+            {formatSecondsForDisplay(totalWorkoutSeconds)}
+          </div>
         </button>
       </div>
     );
