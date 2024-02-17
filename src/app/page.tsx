@@ -6,6 +6,7 @@ import { formatSecondsForDisplay } from "@/utils/timeUtils";
 import NumberInput from "@/components/NumberInput";
 import Checkbox from "@/components/Checkbox";
 import { useWakeLock } from "react-screen-wake-lock";
+import useBeep from "@/hooks/useBeep";
 
 const WARM_UP_TIME = 3;
 const DEFAULT_SET_COUNT = 10;
@@ -36,6 +37,9 @@ export default function Home() {
     release: releaseWakeLock,
   } = useWakeLock();
 
+  // Audio
+  const { beepUp, beepDown } = useBeep();
+
   // Workout state
   const [isPaused, setIsPaused] = useState(false);
   const [currentSetType, setCurrentSetType] = useState<SetType | null>(null);
@@ -57,6 +61,7 @@ export default function Home() {
     if (totalSeconds > 0) return;
     switch (currentSetType) {
       case SetType.WarmUp:
+        beepUp();
         setCurrentSetType(SetType.Work);
         setCurrentSetIndex(0);
         start(workTimeInSeconds);
@@ -66,6 +71,7 @@ export default function Home() {
           finishWorkout();
           break;
         }
+        beepDown();
         setCurrentSetType(SetType.Rest);
         start(restTimeInSeconds);
         break;
@@ -74,12 +80,15 @@ export default function Home() {
           finishWorkout();
           break;
         }
+        beepUp();
         setCurrentSetType(SetType.Work);
         setCurrentSetIndex(currentSetIndex + 1);
         start(workTimeInSeconds);
         break;
     }
   }, [
+    beepDown,
+    beepUp,
     currentSetIndex,
     currentSetType,
     finishWorkout,
