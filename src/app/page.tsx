@@ -93,56 +93,74 @@ export default function Home() {
 
   if (isCreating) {
     return (
-      <div>
-        <h1>New workout</h1>
-        <label className="block">
-          Sets
-          <input
-            type="number"
-            value={setCount}
-            onChange={(e) => setSetCount(Number(e.target.value))}
-          />
-        </label>
-        <label className="block">
-          Work
-          <input
-            type="number"
-            value={workTimeInSeconds}
-            onChange={(e) => setWorkTimeInSeconds(Number(e.target.value))}
-          />
-        </label>
-        <label className="block">
-          Rest
-          <input
-            type="number"
-            value={restTimeInSeconds}
-            onChange={(e) => setRestTimeInSeconds(Number(e.target.value))}
-          />
-        </label>
-        <label className="block">
-          Should skip last rest
-          <input
-            type="checkbox"
-            checked={shouldSkipLastRest}
-            onChange={(e) => setShouldSkipLastRest(e.target.checked)}
-          />
-        </label>
-        <label className="block">
-          Play audio
-          <input
-            type="checkbox"
-            checked={shouldPlayAudio}
-            onChange={(e) => setShouldPlayAudio(e.target.checked)}
-          />
-        </label>
-        <label className="block">
-          Keep screen on
-          <input
-            type="checkbox"
-            checked={shouldKeepScreenOn}
-            onChange={(e) => setShouldKeepScreenOn(e.target.checked)}
-          />
-        </label>
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">New workout</h1>
+        <div className="mb-4">
+          <label className="block">
+            Sets
+            <input
+              type="number"
+              value={setCount}
+              onChange={(e) => setSetCount(Number(e.target.value))}
+              className="border border-gray-300 rounded px-2 py-1"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block">
+            Work
+            <input
+              type="number"
+              value={workTimeInSeconds}
+              onChange={(e) => setWorkTimeInSeconds(Number(e.target.value))}
+              className="border border-gray-300 rounded px-2 py-1"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block">
+            Rest
+            <input
+              type="number"
+              value={restTimeInSeconds}
+              onChange={(e) => setRestTimeInSeconds(Number(e.target.value))}
+              className="border border-gray-300 rounded px-2 py-1"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block">
+            Should skip last rest
+            <input
+              type="checkbox"
+              checked={shouldSkipLastRest}
+              onChange={(e) => setShouldSkipLastRest(e.target.checked)}
+              className="mr-2"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block">
+            Play audio
+            <input
+              type="checkbox"
+              checked={shouldPlayAudio}
+              onChange={(e) => setShouldPlayAudio(e.target.checked)}
+              className="mr-2"
+            />
+          </label>
+        </div>
+        <div className="mb-4">
+          <label className="block">
+            Keep screen on
+            <input
+              type="checkbox"
+              checked={shouldKeepScreenOn}
+              onChange={(e) => setShouldKeepScreenOn(e.target.checked)}
+              className="mr-2"
+            />
+          </label>
+        </div>
         <button
           type="button"
           onClick={() => {
@@ -151,6 +169,7 @@ export default function Home() {
             setCurrentSetType(SetType.WarmUp);
             start(WARM_UP_TIME);
           }}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           Start workout {formatSecondsForDisplay(totalWorkoutSeconds)}
         </button>
@@ -159,14 +178,15 @@ export default function Home() {
   }
 
   return (
-    <div className="w-80">
-      <div className="flex justify-between">
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between mb-4">
         <button
           type="button"
           onClick={() => {
             pause();
             setIsCreating(true);
           }}
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
         >
           X
         </button>
@@ -176,12 +196,13 @@ export default function Home() {
         <button
           type="button"
           onClick={() => setShouldPlayAudio(!shouldPlayAudio)}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
         >
           {shouldPlayAudio ? "🔊" : "🔇"}
         </button>
       </div>
       <div>
-        <p>
+        <p className="text-lg font-bold">
           {currentSetType?.toLocaleUpperCase()} {currentSetIndex + 1}/{setCount}
         </p>
         <p>{formatSecondsForDisplay(totalSeconds)}</p>
@@ -209,6 +230,7 @@ export default function Home() {
               }
             }
           }}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
         >
           &lt;&lt;
         </button>
@@ -223,6 +245,7 @@ export default function Home() {
               setIsPaused(true);
             }
           }}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           {isPaused ? "Resume" : "Pause"}
         </button>
@@ -247,6 +270,7 @@ export default function Home() {
             }
           }}
           disabled={currentSetIndex === setCount - 1}
+          className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
         >
           &gt;&gt;
         </button>
