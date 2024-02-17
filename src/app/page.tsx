@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { formatSecondsForDisplay } from "@/utils/timeUtils";
 import NumberInput from "@/components/NumberInput";
 import Checkbox from "@/components/Checkbox";
-import { Metadata } from "next";
+import { useWakeLock } from "react-screen-wake-lock";
 
 const WARM_UP_TIME = 3;
 const DEFAULT_SET_COUNT = 10;
@@ -30,6 +30,11 @@ export default function Home() {
   const [shouldSkipLastRest, setShouldSkipLastRest] = useState(true);
   const [shouldPlayAudio, setShouldPlayAudio] = useState(true);
   const [shouldKeepScreenOn, setShouldKeepScreenOn] = useState(true);
+  const {
+    isSupported: isWakeLockSupported,
+    request: requestWakeLock,
+    release: releaseWakeLock,
+  } = useWakeLock();
 
   // Workout state
   const [isPaused, setIsPaused] = useState(false);
@@ -44,7 +49,8 @@ export default function Home() {
     if (isCreating) return;
     alert("Workout complete!");
     setIsCreating(true);
-  }, [isCreating]);
+    releaseWakeLock();
+  }, [isCreating, releaseWakeLock]);
 
   // Handle timer expiry at different workout stages
   useEffect(() => {
@@ -125,11 +131,13 @@ export default function Home() {
             isChecked={shouldPlayAudio}
             setIsChecked={setShouldPlayAudio}
           />
-          <Checkbox
-            label="Keep screen on"
-            isChecked={shouldKeepScreenOn}
-            setIsChecked={setShouldKeepScreenOn}
-          />
+          {isWakeLockSupported && (
+            <Checkbox
+              label="Keep screen on"
+              isChecked={shouldKeepScreenOn}
+              setIsChecked={setShouldKeepScreenOn}
+            />
+          )}
         </div>
         <button
           type="button"
@@ -138,6 +146,7 @@ export default function Home() {
             setCurrentSetIndex(-1);
             setCurrentSetType(SetType.WarmUp);
             start(WARM_UP_TIME);
+            requestWakeLock();
           }}
           className="w-full flex justify-between bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-4 rounded-2xl"
         >
@@ -158,6 +167,7 @@ export default function Home() {
           onClick={() => {
             pause();
             setIsCreating(true);
+            releaseWakeLock();
           }}
           className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
         >
